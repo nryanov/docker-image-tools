@@ -11,7 +11,7 @@ RUN apt update && \
 
 # main image
 
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /ycsb/ycsb-0.17.0
 COPY --from=ycsb /build/ycsb-0.17.0 /ycsb/ycsb-0.17.0

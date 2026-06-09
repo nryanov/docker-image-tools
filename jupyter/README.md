@@ -1,4 +1,4 @@
-# Jupyter
+# Jupyter Spark
 Docker image with pre-installed JARs:
 - postgresql driver
 - hadoop aws

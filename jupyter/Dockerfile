@@ -7,11 +7,6 @@ ENV SPARK_VERSION=4.1.1
 ENV SPARK_ICEBERG_RUNTIME_VERSION=4.1
 ENV SPARK_PAIMON_RUNTIME_VERSION=4.0
 
-ENV FLINK_MAJOR_VERSION=2
-ENV FLINK_VERSION=2.1
-ENV FLINK_ICEBERG_RUNTIME_VERSION=4.1
-ENV FLINK_PAIMON_RUNTIME_VERSION=4.0
-
 ENV POSTGRES_DRIVER_VERSION=42.7.10
 ENV AWS_SDK_VERSION=2.29.52
 ENV HADOOP_VERSION=3.4.2
@@ -21,7 +16,6 @@ ENV PAIMON_VERSION=1.4.1
 
 RUN mamba install --yes 'psycopg[binary]' && \
     mamba install --yes 'pyiceberg[pyarrow,sql-postgres,hive]' && \
-    mamba install --yes 'apache-flink==2.1.0' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -38,6 +32,4 @@ USER jovyan
 
 RUN mkdir /home/jovyan/extra-jars
 RUN curl -fsSL -o "/home/jovyan/extra-jars/iceberg-spark-runtime-${SPARK_MAJOR_VERSION}_${SCALA_VERSION}-${ICEBERG_VERSION}.jar" "https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-${SPARK_ICEBERG_RUNTIME_VERSION}_${SCALA_VERSION}/${ICEBERG_VERSION}/iceberg-spark-runtime-${SPARK_ICEBERG_RUNTIME_VERSION}_${SCALA_VERSION}-${ICEBERG_VERSION}.jar" && \
-    curl -fsSL -o "/home/jovyan/extra-jars/paimon-spark-${SPARK_MAJOR_VERSION}_${SCALA_VERSION}-${PAIMON_VERSION}.jar" "https://repo1.maven.org/maven2/org/apache/paimon/paimon-spark-${SPARK_PAIMON_RUNTIME_VERSION}_${SCALA_VERSION}/${PAIMON_VERSION}/paimon-spark-${SPARK_PAIMON_RUNTIME_VERSION}_${SCALA_VERSION}-${PAIMON_VERSION}.jar" && \
-    curl -fsSL -o "/home/jovyan/extra-jars/iceberg-flink-runtime-${FLINK_VERSION}_${SCALA_VERSION}-${ICEBERG_VERSION}.jar" "https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-flink-runtime-${FLINK_VERSION}/${ICEBERG_VERSION}/iceberg-flink-runtime-${FLINK_VERSION}-${ICEBERG_VERSION}.jar" && \
-    curl -fsSL -o "/home/jovyan/extra-jars/paimon-flink-${FLINK_VERSION}_${SCALA_VERSION}-${PAIMON_VERSION}.jar" "https://repo1.maven.org/maven2/org/apache/paimon/paimon-flink-${FLINK_VERSION}/${PAIMON_VERSION}/paimon-flink-${FLINK_VERSION}-${PAIMON_VERSION}.jar"
+    curl -fsSL -o "/home/jovyan/extra-jars/paimon-spark-${SPARK_MAJOR_VERSION}_${SCALA_VERSION}-${PAIMON_VERSION}.jar" "https://repo1.maven.org/maven2/org/apache/paimon/paimon-spark-${SPARK_PAIMON_RUNTIME_VERSION}_${SCALA_VERSION}/${PAIMON_VERSION}/paimon-spark-${SPARK_PAIMON_RUNTIME_VERSION}_${SCALA_VERSION}-${PAIMON_VERSION}.jar"

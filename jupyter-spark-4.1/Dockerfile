@@ -1,5 +1,11 @@
 FROM quay.io/jupyter/pyspark-notebook:spark-4.1.1
 
+RUN mamba install --yes 'psycopg[binary]' && \
+    mamba install --yes 'pyiceberg[pyarrow,sql-postgres,hive]' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
 ENV SCALA_VERSION=2.13
 
 ENV SPARK_MAJOR_VERSION=4
@@ -11,12 +17,6 @@ ENV AWS_SDK_VERSION=2.44.4
 ENV HADOOP_VERSION=3.4.3
 
 ENV ICEBERG_VERSION=1.11.0
-
-RUN mamba install --yes 'psycopg[binary]' && \
-    mamba install --yes 'pyiceberg[pyarrow,sql-postgres,hive]' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
 
 USER root
 
